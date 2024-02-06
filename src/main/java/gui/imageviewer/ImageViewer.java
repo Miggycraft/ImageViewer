@@ -1,9 +1,13 @@
 package gui.imageviewer;
-public class ImageViewer extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ImageViewer
-     */
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class ImageViewer extends javax.swing.JFrame {
+    CustomImages ci = new CustomImages();
+    int index = -1; //selected item index.
+    
     public ImageViewer() {
         initComponents();
     }
@@ -17,21 +21,82 @@ public class ImageViewer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        openItem = new javax.swing.JMenuItem();
+        exitItem = new javax.swing.JMenuItem();
+        optionsMenu = new javax.swing.JMenu();
+        infoItem = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Image Selector");
+
+        fileMenu.setText("File");
+
+        openItem.setText("Open Directory");
+        openItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(openItem);
+
+        exitItem.setText("Exit");
+        exitItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitItem);
+
+        jMenuBar1.add(fileMenu);
+
+        optionsMenu.setText("Options");
+
+        infoItem.setText("Image Info");
+        infoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoItemActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(infoItem);
+
+        jMenuBar1.add(optionsMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 459, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitItemActionPerformed
+
+    private void infoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoItemActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_infoItemActionPerformed
+
+    private void openItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openItemActionPerformed
+        // TODO add your handling code here
+        JFileChooser dir = new JFileChooser();
+        dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        dir.setCurrentDirectory(new File("\\"));
+        dir.showOpenDialog(dir);
+        ci.isValid(dir.getSelectedFile().toString());
+    }//GEN-LAST:event_openItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,5 +134,11 @@ public class ImageViewer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem exitItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem infoItem;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem openItem;
+    private javax.swing.JMenu optionsMenu;
     // End of variables declaration//GEN-END:variables
 }
