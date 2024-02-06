@@ -1,9 +1,13 @@
 package gui.imageviewer;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ImageViewer extends javax.swing.JFrame {
@@ -12,6 +16,24 @@ public class ImageViewer extends javax.swing.JFrame {
     
     public ImageViewer() {
         initComponents();
+    }
+    
+    public void showImageInfo(){
+        Thread t = new Thread();
+        try{
+            JOptionPane.showMessageDialog(this, "Getting Info, please wait after pressing \"OK\"");
+            t.sleep(1000);
+            
+            if (index == -1){
+                JOptionPane.showMessageDialog(this, "No image found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(this, ci.getImage(index).pasteInfo(), 
+                    "Image Information", JOptionPane.INFORMATION_MESSAGE);    
+        }
+        catch(Exception x){
+            x.printStackTrace();
+        }
     }
     
     public void moveImage(boolean toRight){
@@ -157,7 +179,7 @@ public class ImageViewer extends javax.swing.JFrame {
 
     private void infoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoItemActionPerformed
         // TODO add your handling code here:
-        
+        showImageInfo();
     }//GEN-LAST:event_infoItemActionPerformed
 
     private void openItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openItemActionPerformed

@@ -39,4 +39,12 @@ public class CustomImage {
         System.out.println(fileExtension + "\n" + fileName + "\n" + fileDir);
     }
     
+    public String pasteInfo(){
+        String s = "File Name: " + fileName + "\n"
+                 + "File Directory:" + fileDir + "\n"
+                 + "File Type: " + fileExtension;
+        
+        return s;
+    }
+    
 }
