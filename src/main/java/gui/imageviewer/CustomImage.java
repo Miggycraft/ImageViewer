@@ -35,4 +35,8 @@ public class CustomImage {
         this.fileDir = fileDir;
     }
     
+    public void debugPrintInfo(){
+        System.out.println(fileExtension + "\n" + fileName + "\n" + fileDir);
+    }
+    
 }

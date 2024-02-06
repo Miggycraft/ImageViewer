@@ -22,6 +22,10 @@ public class CustomImages {
         lists.clear();
     }
     
+    public CustomImage getImage(int i){
+        return lists.get(i);
+    }
+    
     public boolean checkEx(String ex){
         for (String s : supportedTypes){
             if (ex.equals(s)){
@@ -32,19 +36,19 @@ public class CustomImages {
         return false;
     }
     
-    public boolean isValid(String path){
+    public void getLists(String path){
         //add logic.
         int len;
         File f = new File(path);
+        int i = 0;
         for (String s: f.list()){
             len = s.length();
             String temp = s.substring(len - 3);
-            if (checkEx(temp)){
-                System.out.println(s);
+            if (checkEx(temp)){ // valid
+                // LGTM
+                lists.add(new CustomImage(temp, s.substring(0, len - 4), path+"\\"+s));
             }
         }
         
-
-        return true;
     }
 }
