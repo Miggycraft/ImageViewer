@@ -26,6 +26,14 @@ public class CustomImages {
         return lists.get(i);
     }
     
+    public boolean hasInside(){
+        return lists.size() > 0;
+    }
+    
+    public int getSize(){
+        return lists.size();
+    }
+    
     public boolean checkEx(String ex){
         for (String s : supportedTypes){
             if (ex.equals(s)){

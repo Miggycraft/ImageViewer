@@ -1,6 +1,8 @@
 package gui.imageviewer;
 
+import java.awt.Image;
 import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -10,14 +12,52 @@ public class ImageViewer extends javax.swing.JFrame {
     
     public ImageViewer() {
         initComponents();
+    }
+    
+    public void moveImage(boolean toRight){
+        if (!ci.hasInside())
+            return;
         
+        if (toRight){ // moving to right
+            if (index == ci.getSize()-1){
+                index = 0;
+            }
+            else{
+                ++index;
+            }
+        }
+        else{ // moving to left
+            if (index == 0){
+                index = ci.getSize()-1;
+            }
+            else{
+                --index;
+            }
+        }
+        
+        updateImageView(index);
     }
 
+    public void updateImageView(int index){
+        //[788, 425]
+        if (index == -1){ // clear image
+            imageLabel.setIcon(null);
+            return;
+        }
+        
+        String path = ci.getImage(index).getFileDir();
+        ImageIcon tempImage = new ImageIcon(path);
+        tempImage = new ImageIcon(tempImage.getImage().getScaledInstance(788, 425, Image.SCALE_SMOOTH));
+        imageLabel.setIcon(tempImage);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
+        rightButton = new javax.swing.JButton();
+        leftButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openItem = new javax.swing.JMenuItem();
@@ -30,7 +70,23 @@ public class ImageViewer extends javax.swing.JFrame {
         setName("Image Viewer"); // NOI18N
         setResizable(false);
 
-        label.setText("jLabel1");
+        imageLabel.setPreferredSize(new java.awt.Dimension(788, 425));
+
+        rightButton.setText("Right");
+        rightButton.setFocusable(false);
+        rightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightButtonActionPerformed(evt);
+            }
+        });
+
+        leftButton.setText("Left");
+        leftButton.setFocusable(false);
+        leftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leftButtonActionPerformed(evt);
+            }
+        });
 
         fileMenu.setText("File");
 
@@ -70,13 +126,25 @@ public class ImageViewer extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(leftButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rightButton)
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 75, Short.MAX_VALUE))
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rightButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leftButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -94,12 +162,34 @@ public class ImageViewer extends javax.swing.JFrame {
 
     private void openItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openItemActionPerformed
         // TODO add your handling code here
+        if (ci.hasInside()){ // finding new dir and clearing curr img
+            ci.clearImages();
+            index = -1;
+            updateImageView(index);
+        }
         JFileChooser dir = new JFileChooser();
         dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dir.setCurrentDirectory(new File("\\"));
         dir.showOpenDialog(dir);
         ci.getLists(dir.getSelectedFile().toString());
+        if (ci.hasInside()){
+            index = 0;
+            updateImageView(index);
+        }
+        else{
+            index = -1;
+        }
     }//GEN-LAST:event_openItemActionPerformed
+
+    private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftButtonActionPerformed
+        // TODO add your handling code here:
+        moveImage(false);
+    }//GEN-LAST:event_leftButtonActionPerformed
+
+    private void rightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightButtonActionPerformed
+        // TODO add your handling code here:
+        moveImage(true);
+    }//GEN-LAST:event_rightButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,10 +229,12 @@ public class ImageViewer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JMenuItem infoItem;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JLabel label;
+    private javax.swing.JButton leftButton;
     private javax.swing.JMenuItem openItem;
     private javax.swing.JMenu optionsMenu;
+    private javax.swing.JButton rightButton;
     // End of variables declaration//GEN-END:variables
 }
