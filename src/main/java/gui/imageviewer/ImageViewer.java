@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -85,6 +86,7 @@ public class ImageViewer extends javax.swing.JFrame {
         openItem = new javax.swing.JMenuItem();
         exitItem = new javax.swing.JMenuItem();
         optionsMenu = new javax.swing.JMenu();
+        supportItem = new javax.swing.JMenuItem();
         infoItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,6 +133,14 @@ public class ImageViewer extends javax.swing.JFrame {
         jMenuBar1.add(fileMenu);
 
         optionsMenu.setText("Options");
+
+        supportItem.setText("Supported Formats");
+        supportItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supportItemActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(supportItem);
 
         infoItem.setText("Image Info");
         infoItem.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +223,11 @@ public class ImageViewer extends javax.swing.JFrame {
         moveImage(true);
     }//GEN-LAST:event_rightButtonActionPerformed
 
+    private void supportItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, Arrays.toString(ci.supportedTypes), "Supported Formats", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_supportItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,5 +273,6 @@ public class ImageViewer extends javax.swing.JFrame {
     private javax.swing.JMenuItem openItem;
     private javax.swing.JMenu optionsMenu;
     private javax.swing.JButton rightButton;
+    private javax.swing.JMenuItem supportItem;
     // End of variables declaration//GEN-END:variables
 }

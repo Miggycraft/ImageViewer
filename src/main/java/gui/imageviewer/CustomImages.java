@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class CustomImages {
-    String supportedTypes[] = {"jpeg", "png", "gif", "jpg"}; // not sure if jpg is valid
+    String supportedTypes[] = {"jpeg", "png", "jpg"}; // not sure if jpg is valid
     ArrayList<CustomImage> lists = new ArrayList();
     
     public void addImage(CustomImage ci){
